@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <style type="text/css">
+                        .label {
+                            width:20%;
+                            padding:4px;
+                        }
+
+                        .value {
+                            width:80%;
+                            padding:4px;
+                        }
+
+                        .grid {
+                            width:100%;
+                        }
+
+                        .error {
+                            color: red;
+                        }
+
+                        .outputLabel {
+                            font-weight: bold;
+                        }
+
+                        .grid {
+                            width:33%;
+                            padding:4px;
+                        }
+                    </style>
+
+
+                    <h:form>
+
+                        <p:growl id="growl" sticky="true" showDetail="true"/>
+
+                        <p:wizard flowListener="#{userWizard.onFlowProcess}">
+                            <p:tab id="personal" title="Personal">
+                                <p:panel header="Personal Details">
+                                    <p:messages />
+                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                        <h:outputText value="Firstname: *" />
+                                        <p:inputText value="#{userWizard.user.firstname}" required="true" label="Firstname"/>
+
+                                        <h:outputText value="Lastname: *" />
+                                        <p:inputText value="#{userWizard.user.lastname}" required="true" label="Lastname"/>
+
+                                        <h:outputText value="Age: " />
+                                        <p:inputText value="#{userWizard.user.age}" />
+
+                                        <h:outputText value="Skip to last: " />
+                                        <h:selectBooleanCheckbox value="#{userWizard.skip}" />
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="address" title="Address">
+                                <p:panel header="Address Details">
+                                    <p:messages />
+                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                        <h:outputText value="Street: " />
+                                        <p:inputText value="#{userWizard.user.street}" />
+
+                                        <h:outputText value="Postal Code: " />
+                                        <p:inputText value="#{userWizard.user.postalCode}" />
+
+                                        <h:outputText value="City: " />
+                                        <p:inputText value="#{userWizard.user.city}" />
+
+                                        <h:outputText value="Skip to last: " />
+                                        <h:selectBooleanCheckbox value="#{userWizard.skip}" />
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="contact" title="Contact">
+                                <p:panel header="Contact Information">
+                                    <p:messages />
+                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                        <h:outputText value="Email: *" />
+                                        <p:inputText value="#{userWizard.user.email}" required="true" label="Email"/>
+
+                                        <h:outputText value="Phone: " />
+                                        <p:inputText value="#{userWizard.user.phone}"/>
+
+                                        <h:outputText value="Additional Info: " />
+                                        <p:inputText value="#{userWizard.user.info}"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="confirm" title="Confirmation">
+                                <p:panel header="Confirmation">
+                                    <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                                        <h:panelGrid columns="2" columnClasses="label, value">
+                                            <h:outputText value="Firstname: " />
+                                            <h:outputText value="#{userWizard.user.firstname}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Lastname: " />
+                                            <h:outputText value="#{userWizard.user.lastname}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Age: " />
+                                            <h:outputText value="#{userWizard.user.age}" styleClass="outputLabel"/>
+                                        </h:panelGrid>
+
+                                        <h:panelGrid columns="2" columnClasses="label, value">
+                                            <h:outputText value="Street: " />
+                                            <h:outputText value="#{userWizard.user.street}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Postal: " />
+                                            <h:outputText value="#{userWizard.user.postalCode}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="City: " />
+                                            <h:outputText value="#{userWizard.user.city}" styleClass="outputLabel"/>
+                                        </h:panelGrid>
+
+                                        <h:panelGrid columns="2" columnClasses="label, value">
+                                            <h:outputText value="Email: " />
+                                            <h:outputText value="#{userWizard.user.email}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Phone " />
+                                            <h:outputText value="#{userWizard.user.phone}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Info: " />
+                                            <h:outputText value="#{userWizard.user.info}" styleClass="outputLabel"/>
+
+                                            <h:outputText />
+                                            <h:outputText />
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+
+                                    <p:commandButton value="Submit" action="#{userWizard.save}" update="growl" process="@this"/>
+                                </p:panel>
+                            </p:tab>
+                        </p:wizard>
+
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton value="Basic" type="button" onclick="PF('dlg1').show();" />
+
+                        <p:commandButton value="Modal" type="button" onclick="PF('dlg2').show();" />
+
+                        <p:commandButton value="Effects" type="button" onclick="PF('dlg3').show();" /> 
+                    </h:panelGrid>
+                    <p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
+                        <h:outputText value="Resistance to PrimeFaces is futile!" />
+                    </p:dialog>
+
+                    <p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="100">
+                        <h:outputText value="This is a Modal Dialog." />
+                    </p:dialog>   
+
+                    <p:dialog header="Effects" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="100">
+                        <h:outputText value="This dialog has nice effects." />
+                    </p:dialog>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                    <p:menu>
+                        <p:submenu label="Resources">
+                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
+                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
+                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+
+                        </p:submenu>
+
+                    </p:menu>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:form>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Basic: " />
+                            <p:password id="nonFeedback" value="#{passwordView.password1}" />
+
+                            <h:outputText value="Feedback: " />
+                            <p:password id="feedback" value="#{passwordView.password2}" feedback="true" />
+
+                            <h:outputText value="Feedback (Turkish): " />
+                            <p:password id="turkishFeedback" value="#{passwordView.password3}" feedback="true"
+                                        promptLabel="Lütfen şifre giriniz" weakLabel="Zayıf"
+                                        goodLabel="Orta seviye" strongLabel="Güçlü" />
+
+                            <h:outputText value="Inline Feedback: " />
+                            <p:password id="inlineFeedback" value="#{passwordView.password4}" feedback="true" inline="true" />
+                        </h:panelGrid>
+
+                        <p:spacer height="10" />
+
+                        <p:separator />
+
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" />
+
+                        <h:panelGrid columns="2" id="matchGrid" cellpadding="5">                   
+                            <h:outputLabel for="pwd1" value="Password 1: *" />
+                            <p:password id="pwd1" value="#{passwordView.password5}" match="pwd2" label="Password 1" required="true" />
+
+                            <h:outputLabel for="pwd2" value="Password 2: *" />
+                            <p:password id="pwd2" value="#{passwordView.password5}" label="Password 2" required="true" />
+                        </h:panelGrid>
+
+                        <p:commandButton update="matchGrid" value="Save" />    
+                    </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
